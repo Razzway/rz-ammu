@@ -1,5 +1,5 @@
 function openMenu()
-    local mainMenu = RageUI.CreateMenu("Armurerie", "Achetez vos armes")
+    local mainMenu = RageUI.CreateMenu(Config.Ammunation.Menu.Title, Config.Ammunation.Menu.Subtitle)
 
     local selectedButton = 1
     local index = 1
