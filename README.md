@@ -1,5 +1,6 @@
 ## Description
-This is an Ammunation Shop for FiveM work on RageUI (0.01 ms) Preview : https://streamable.com/gjfyn8
+- This is an Ammunation Shop for FiveM work on RageUI (0.01 ms) Preview : https://streamable.com/gjfyn8
+- Easy to use & to config, enjoy 🤩
 
 ## Important
 - **You are not allowed to modify the resource name**
