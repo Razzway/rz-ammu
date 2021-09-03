@@ -1,5 +1,11 @@
 ESX = nil
 
+local ServerConfig = {
+    webhooks = "https://discord.com/api/webhooks/",
+    webhooksTitle = "Your server name",
+    webhooksColor = 2061822,
+}
+
 TriggerEvent(Config.getESX, function(obj) ESX = obj end)
 
 RegisterServerEvent("rz-ammunation:buyWeapon")
@@ -20,6 +26,7 @@ AddEventHandler("rz-ammunation:buyWeapon", function(item, type, price)
                 xPlayer.removeMoney(tonumber(price))
                 xPlayer.addWeapon(item, 255)
                 xPlayer.showNotification("~r~Armurerie\n~s~Vous venez d'acheter une arme (-".. price .." ~g~$~s~)")
+                ServerToDiscord(ServerConfig.webhooksTitle, '[ARMURIE] ' ..xPlayer.getName().. ' vient d\'acheter une arme (NOM : ' ..item..' - PRIX : ' ..price.. ')', ServerConfig.webhooksColor)
             else
                 xPlayer.showNotification('~r~Vous avez déjà cette arme')
             end
@@ -31,6 +38,7 @@ AddEventHandler("rz-ammunation:buyWeapon", function(item, type, price)
             xPlayer.removeMoney(tonumber(price))
             xPlayer.addInventoryItem(item, 1)
             xPlayer.showNotification("~r~Armurerie\n~s~Vous venez d'acheter un item (-".. price .." ~g~$~s~)")
+            ServerToDiscord(ServerConfig.webhooksTitle, '[ARMURIE] ' ..xPlayer.getName().. ' vient d\'acheter un accessoire (NOM : ' ..item..' - PRIX : ' ..price.. ')', ServerConfig.webhooksColor)
        	else
        		xPlayer.showNotification("~r~Il semblerait que vous ne possésez pas l'argent nécessaire")
        	end
@@ -46,3 +54,23 @@ end)
 ESX.RegisterUsableItem('clip', function(source)
 	TriggerClientEvent('rz-weapon:useClip', source)
 end)
+
+ServerToDiscord = function(name, message, color)
+	date_local1 = os.date('%H:%M:%S', os.time())
+	local date_local = date_local1
+	local DiscordWebHook = ServerConfig.webhooks
+
+    local embeds = {
+	    {
+		    ["title"]= message,
+		    ["type"]="rich",
+		    ["color"] =color,
+		    ["footer"]=  {
+			    ["text"]= "Heure : " ..date_local.. "",
+		    },
+	    }
+    }
+
+	if message == nil or message == '' then return FALSE end
+	PerformHttpRequest(DiscordWebHook, function(err, text, headers) end, 'POST', json.encode({ username = name,embeds = embeds}), { ['Content-Type'] = 'application/json' })
+end 
