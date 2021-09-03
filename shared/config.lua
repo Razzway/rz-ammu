@@ -4,7 +4,8 @@ Config = {
         showBlip = true, -- Afficher les blips sur la carte // oui = true | non = false
         showMarker = true, -- Afficher les marker // oui = true | non = false
         Menu = {
-            
+            Title = "Armurerie",
+	        Subtitle = "Achetez vos armes",
         },
         Marker = { -- https://docs.fivem.net/docs/game-references/markers/ & https://htmlcolorcodes.com/fr/
             Type = 2, 
